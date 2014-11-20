@@ -11,8 +11,7 @@ s2k protractor e2e UI test
 
     $ md selenium
     $ cd selenium
-
-    $ copy chromedriver.exe & selenium-server-standalone-2.43.1.jar
+    copy chromedriver.exe & selenium-server-standalone-2.43.1.jar
 
     $ cd node_modules\protractor
     $ npm install

@@ -1,0 +1,34 @@
+{
+  "name": "s2k_ui_test",
+  "description": "Webpage test using Protractor",
+  "homepage": "http://store.s2k.net/admin/#/login",
+  "keywords": [
+    "angular",
+    "test",
+    "testing",
+    "webdriver",
+    "webdriverjs",
+    "selenium"
+  ],
+  "dependencies": {
+    "request": "~2.36.0",
+    "selenium-webdriver": "2.43.5",
+    "minijasminenode": "1.1.1",
+    "jasminewd": "1.1.0",
+    "saucelabs": "~0.1.0",
+    "glob": "~3.2",
+    "adm-zip": "0.4.4",
+    "optimist": "~0.6.0",
+    "q": "1.0.0",
+    "lodash": "~2.4.1",
+    "source-map-support": "~0.2.6",
+    "protractor": "1.4.0",
+    "moment": "2.8.3"
+  },
+  "main": "app/s2k_conf.js",
+  "scripts": {
+    "config": "app/s2k_conf.js",
+    "specification": "app/s2k_spec.js"
+  },
+  "readme": "ERROR: No README data found!"
+}

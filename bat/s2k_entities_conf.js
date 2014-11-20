@@ -9,6 +9,7 @@ exports.config = {
     chromeOnly: true,
     //这个选项只需要安装chromedriver.exe
     //增加一条记录
+    //再次追加
     chromeDriver: '../selenium/chromedriver',
 
     /*start up protractor only by chrome*/

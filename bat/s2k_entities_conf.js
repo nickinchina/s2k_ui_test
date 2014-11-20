@@ -6,12 +6,11 @@ exports.config = {
 
     /*start up protractor only by chrome*/
     // Do not start a Selenium Standalone sever - only run this using chrome.
-    chromeOnly: true,
+    chromeOnly: true, //这个选项只需要安装chromedriver.exe
     chromeDriver: '../selenium/chromedriver',
 
     /*start up protractor only by chrome*/
     //seleniumAddress: 'http://localhost:4444/wd/hub',
-
 
     //Timeouts from Protractor
     //https://github.com/angular/protractor/blob/master/docs/timeouts.md
@@ -62,8 +61,10 @@ exports.config = {
         //参考网址：http://ramonvictor.github.io/protractor/slides/#/37
     },
     onPrepare: function() {
-        browser.driver.manage().window().setSize(1024, 768);//预设浏览器窗口尺寸
+        //browser.driver.manage().window().setSize(1024, 768);//预设浏览器窗口尺寸
         //参考网址：http://ramonvictor.github.io/protractor/slides/#/34
+        browser.driver.manage().window().maximize();
+        //参考网址：http://stackoverflow.com/questions/7895553/webdriver-firefox-7-maximize-window
     },
     // Spec patterns are relative to the current working directly when
     // protractor is called.

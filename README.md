@@ -25,3 +25,6 @@ set a "run configuration" as Node.js in WebStorm
  - Application parameters: s2k_conf.js
 
 run "s2k_conf"
+
+command line
+    $ protractor s2k_conf.js

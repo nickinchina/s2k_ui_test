@@ -11,8 +11,8 @@ SET L=%CurTime:~1,1%
 IF "%H%"==" " (SET H=0)
 IF "%H%%L%"=="%HH%" (SET HH=%HH%) ELSE (SET HH=%H%%L%)
 
-CD E:\GitHub\s2k_ui_test\bat
-E:
+CD C:\GitHub\s2k_ui_test\bat
+C:
 ECHO RUNNING S2K UI TEST --- ["Reports"] MODULE ...
 ECHO PLEASE WAIT ...
 @ECHO OFF

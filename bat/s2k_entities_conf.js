@@ -8,6 +8,7 @@ exports.config = {
     // Do not start a Selenium Standalone sever - only run this using chrome.
     chromeOnly: true,
     //这个选项只需要安装chromedriver.exe
+    //增加一条记录
     chromeDriver: '../selenium/chromedriver',
 
     /*start up protractor only by chrome*/

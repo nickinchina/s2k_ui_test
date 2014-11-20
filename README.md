@@ -18,10 +18,11 @@ s2k protractor e2e UI test
     $ npm install
 
 set a "run configuration" as Node.js in WebStorm
-                  Name: s2k_conf
-      Node interpreter: C:\Program Files\nodejs\node.exe
-     Working directory: ..\s2k_ui_test\app
-       JavaScript file: ..\node_modules\protractor\lib\cli.js
-Application parameters: s2k_conf.js
+
+ - Name: s2k_conf
+ - Node interpreter: C:\Program Files\nodejs\node.exe
+ - Working directory: ..\s2k_ui_test\app
+ - JavaScript file: ..\node_modules\protractor\lib\cli.js
+ - Application parameters: s2k_conf.js
 
 run "s2k_conf"

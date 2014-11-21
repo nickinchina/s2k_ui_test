@@ -229,7 +229,7 @@ click_product_quick_add = function(dropdown, menuindex, listindex){
             });
         });
     }).then(function() {
-        element(by.css('[ng-click="reset()"]')).click().then(showfooter);
+        element(by.css('[ng-click="reset()"]')).click();
     }).then(function() {
         if (aBarcode.length > 0) {
             if (listindex > aBarcode.length) {
@@ -248,7 +248,7 @@ click_product_quick_add = function(dropdown, menuindex, listindex){
                     expect(element(by.model('item.productvar.shortname')).getAttribute('value')).toEqual(aBarcode[listindex].shortname);
                 });
             }).then(function() {
-                element(by.css('[ng-click="reset()"]')).click().then(showfooter);
+                element(by.css('[ng-click="reset()"]')).click();
             });
         }
     });

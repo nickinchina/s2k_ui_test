@@ -64,7 +64,7 @@ exports.config = {
                 index: 0,
                 idxProducts:     0,
                 idxPricebook:    1,
-                idxQuickProduct: 2,
+                idxQuickAdd: 2,
                 idxDepartment:   3,
                 idxUPCAssembly:  4,
                 idxFuelGrades:   5,
@@ -116,6 +116,7 @@ exports.config = {
         //参考网址：http://ramonvictor.github.io/protractor/slides/#/37
     },
     onPrepare: function() {
+        //browser.driver.manage().window().maximize(); //最大化窗口
         browser.driver.manage().window().setSize(1024, 768);//预设浏览器窗口尺寸
         //参考网址：http://ramonvictor.github.io/protractor/slides/#/34
     },

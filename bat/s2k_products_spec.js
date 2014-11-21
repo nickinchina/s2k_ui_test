@@ -1,6 +1,13 @@
 /**
  * Created by Lin.Zhi on 2014-10-23.
  */
+
+/**
+ * Get barcode info. from [Products Catalog] to [Quick Add/Change Product]
+ * Should be run function [click_products_catalog] first, then run [click_product_quick_add]
+ * Structure:
+ * aBarcode[i] = {name: '', barcode = '', shortname = ''};
+ */
 var aBarcode = [];
 //Print console.log with Date-Time Stamp
 printLog = function(logText){
@@ -55,8 +62,8 @@ showfooter = function() {
 };
 
 click_products_catalog = function(dropdown, menuindex, listindex){
-    aBarcode[listindex] = listindex + 100;
     //console.log('\n********** Click List No. '+ (listindex+1) +' **********\n');
+    var dropdowntext = '';
     var menu=dropdown.all(by.css('[ng-click="go(link.link)"]')).get(menuindex); //products catalog固定值0
     menu.getText().then(function(menutext){
         console.log('\nClick Dropdown Menu [ '+ menutext +' ] Index:' + menuindex);
@@ -65,7 +72,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
 
     var subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
     subTitle1.count().then(function(list){
-        if (list>0) {
+        if (list > 0) {
             console.log('Located ' + list + ' SubTitle Name [ Listing ]');
         }
         else {
@@ -84,6 +91,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
 
     var newInput;
     dropdown.getText().then(function(text){
+        dropdowntext = text;
         if (text == 'Marketing' && menuindex == 1) { //Marketing -> Advertizement Items
             newInput = element.all(by.css('.col-md-4 input'));
         } else if(text == 'Products' && menuindex == browser.params.menuindex.products.idxTaxRates) { //Products -> Tax Rates
@@ -133,6 +141,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
     list.count().then(function(icount){
         if (icount > 0) {
             console.log('Click List Record No. ' + ((listindex % icount)+1) + '/' + icount);
+
             list.get(listindex % icount).click().then(showfooter);
 
             //var subTitle2 = element.all(by.css('[ng-show="subTitle"]'));
@@ -154,6 +163,22 @@ click_products_catalog = function(dropdown, menuindex, listindex){
             //});
             expect(subTitle1.first().getText()).toEqual('Editing');
 
+            if (dropdowntext == 'Products' && menuindex == browser.params.menuindex.products.idxProducts) { //Products -> Products Catalog
+                //get product name/barcode/shortname
+                var sname = '', sbarcode = '';
+                element(by.model('item.name')).getAttribute('value').then(function (value) {
+                    sname = value;
+                }).then(function () {
+                    element(by.model('item.itemvar.upc')).getAttribute('value').then(function (value) {
+                        sbarcode = value;
+                    });
+                }).then(function () {
+                    element(by.model('item.itemvar.shortname')).getAttribute('value').then(function (shortnamevalue) {
+                        aBarcode[listindex] = {name: sname, barcode: sbarcode, shortname: shortnamevalue};
+                    });
+                });
+            }
+
             var input = element.all(by.css('.col-md-6 input'));
             input.count().then(function(icount){
                 console.log('Located ' +icount + ' Input Box(s)');
@@ -168,6 +193,63 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         }
         else {
             console.log('*** *** *** No Record(s) *** *** *** Found in the [ Listing ], Ignore [ Editing ] Checking.');
+        }
+    });
+};
+
+click_product_quick_add = function(dropdown, menuindex, listindex){
+    //console.log('\n********** Click List No. '+ (listindex+1) +' **********\n');
+    var menu=dropdown.all(by.css('[ng-click="go(link.link)"]')).get(menuindex); //products catalog固定值0
+    menu.getText().then(function(menutext){
+        console.log('\nClick Dropdown Menu [ '+ menutext +' ] Index:' + menuindex);
+    });
+    menu.click().then(showfooter);
+
+    var subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
+    subTitle1.count().then(function(list){
+        if (list>0) {
+            console.log('Located ' + list + ' SubTitle Name [ Item ]');
+        }
+        else {
+            console.log('*** *** *** CANNOT Located SubTitle Name [ Item ] !');
+        }
+    });
+    expect(subTitle1.first().getText()).toEqual('Item');
+
+    var newInput = element(by.model('item.upc'));
+    var searchButton = element(by.css('[ng-click="search()"]'));
+    newInput.clear().sendKeys('(Valided by protractor)').then(function() {
+        searchButton.click().then(function() {
+            element.all(by.css('.col-md-6 input')).each(function(ele) {
+                ele.isDisplayed().then(function(isVisible){
+                    if (isVisible) {
+                        ele.sendKeys('(Valided by protractor)');
+                    }
+                });
+            });
+        });
+    }).then(function() {
+        element(by.css('[ng-click="reset()"]')).click().then(showfooter);
+    }).then(function() {
+        if (aBarcode.length > 0) {
+            if (listindex > aBarcode.length) {
+                listindex = aBarcode.length - 1;
+            }
+            newInput.sendKeys(aBarcode[listindex].barcode).then(function() {
+                printLog('Search Product for Barcode : ' + aBarcode[listindex].barcode);
+                searchButton.click().then(function() {
+                    element(by.model('item.product.name')).getAttribute('value').then(function(value) {
+                        printLog('Get Product Name : ' + value);
+                    });
+                    element(by.model('item.productvar.shortname')).getAttribute('value').then(function(value) {
+                        printLog('Get Product Shortname : ' + value);
+                    });
+                    expect(element(by.model('item.product.name')).getAttribute('value')).toEqual(aBarcode[listindex].name);
+                    expect(element(by.model('item.productvar.shortname')).getAttribute('value')).toEqual(aBarcode[listindex].shortname);
+                });
+            }).then(function() {
+                element(by.css('[ng-click="reset()"]')).click().then(showfooter);
+            });
         }
     });
 };
@@ -847,7 +929,7 @@ describe("s2k login page", function() {
     var topMenu = browser.params.menuindex.products.index;
     it("login to system", logins2k);
 
-    if (true) {
+    if (false) {
         describe('"Products" menu navigation', function () {
             var dropdown;
             beforeEach(function () {
@@ -959,7 +1041,7 @@ describe("s2k login page", function() {
         });
     }
 
-    if (false) {
+    if (true) {
         describe('Products Advance Search', function () {
             var dropdown;
             beforeEach(function () {
@@ -970,12 +1052,22 @@ describe("s2k login page", function() {
             var testcount = browser.params.test.count;
 
             for (i = 0; i < testcount; i++) {
+                //闭包函数参考：http://stackoverflow.com/questions/21634558/looping-on-a-protractor-test-with-parameters
                 (function (testindex) {
-                    it('Products Advance Search', function () {
-                        click_advanced_search(dropdown, browser.params.menuindex.products.idxProducts, testindex); //0=Products Catalog
+                    it('Products Catalog', function () {
+                        click_products_catalog(dropdown, browser.params.menuindex.products.idxProducts, testindex); //0=Products Catalog
                     });
                 })(i);
             }
+
+            for (i = 0; i < testcount; i++) {
+                (function (testindex) {
+                    it('Quick Add\/Change Product', function () {
+                        click_product_quick_add(dropdown, browser.params.menuindex.products.idxQuickAdd, testindex); //0=Products Catalog
+                    });
+                })(i);
+            }
+
         });
     }
 });

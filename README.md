@@ -28,3 +28,7 @@ run "s2k_conf"
 
 command line
     $ protractor s2k_conf.js
+
+bat folder(ui test files)
+
+    please ref the RUN.md

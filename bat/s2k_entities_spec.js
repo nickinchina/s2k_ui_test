@@ -104,7 +104,8 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         console.log('Go Back To [ ' + text + ' ] Page\n');
     });
     expect(clickButton.getText()).toEqual('Listing');
-    clickButton.click().then(showfooter);
+
+    clickButton.click().then(showfooter); //Element is not clickable at point
 
     subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
     subTitle1.count().then(function(list){
@@ -323,7 +324,6 @@ click_pricebook_modify = function(dropdown, listindex){
 
             //list.get(listindex % icount).click();
             list.get(listindex % icount).click().then(showfooter); //点击单项
-TODO:
             //expect(modaldialog.first().getText()).toEqual('Editing');
 
             var input = element.all(by.css('.col-md-4 input'));
@@ -421,6 +421,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         //fuel tanks
@@ -439,6 +440,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         //fuel blends
@@ -457,6 +459,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         default:
@@ -512,6 +515,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
             console.log('*** *** *** No Record(s) *** *** *** Found in the [ Listing ], Ignore [ Editing ] Checking.');
         }
     });
+    browser.executeScript('window.scrollTo(0,0)');
 };
 
 click_store = function(dropdown, menuindex, listindex){
@@ -568,6 +572,9 @@ click_store = function(dropdown, menuindex, listindex){
             console.log('Go Back To [ ' + text + ' ] Page\n');
         });
         expect(clickButton.getText()).toEqual('Listing');
+TODO:
+        //browser.executeScript("arguments[0].scrollIntoView(true);", clickButton);
+        browser.executeScript('window.scrollTo(0,0)');
         clickButton.click().then(showfooter);
 
         subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
@@ -623,6 +630,7 @@ click_store = function(dropdown, menuindex, listindex){
             console.log('*** *** *** No Record(s) *** *** *** Found in the [ Listing ], Ignore [ Editing ] Checking.');
         }
     });
+    browser.executeScript('window.scrollTo(0,0)');
 };
 
 click_logs = function(dropdown, menuindex, listindex){

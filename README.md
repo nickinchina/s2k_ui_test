@@ -20,7 +20,7 @@ download chromedriver_win32.zip
 
     https://chromedriver.storage.googleapis.com/2.10/chromedriver_win32.zip
 
-unzip to: chromedriver.exe
+unzip to selenium folder: chromedriver.exe
 
     $ cd node_modules\protractor
     $ npm install

@@ -1,4 +1,5 @@
-node_modules/
-selenium/
+node_modules
+npm-debug.log
+selenium
 bat/log/*.log
-.idea/
+.idea

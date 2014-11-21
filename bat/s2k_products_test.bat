@@ -16,6 +16,6 @@ C:
 ECHO RUNNING S2K UI TEST --- ["Products"] MODULE ...
 ECHO PLEASE WAIT ...
 @ECHO OFF
-dir > "log\%CurDate:~0,10%T%HH%-%CurTime:~3,2%-%CurTime:~6,2%N%CurTime:~9,3%[PRD].log"
+dir > "log\test.log"
 ENDLOCAL
 ECHO UI TEST FINISED. PLEASE CHECK THE LOG FILE.

@@ -12,9 +12,11 @@ s2k protractor e2e UI test
     $ md selenium
     $ cd selenium
 
-download selenium-server-standalone-2.43.1.jar(https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar)
+download selenium-server-standalone-2.43.1.jar
+(https://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar)
 
-download chromedriver_win32.zip(https://chromedriver.storage.googleapis.com/2.10/chromedriver_win32.zip)
+download chromedriver_win32.zip
+(https://chromedriver.storage.googleapis.com/2.10/chromedriver_win32.zip)
 
 unzip to: chromedriver.exe
 

@@ -5,6 +5,8 @@ s2k protractor e2e UI test
 
 "s2k_ui_test" Setup Steps:
 
+    $ npm install -g protractor
+
     $ git clone https://github.com/luckylz2git/s2k_ui_test.git
     $ cd s2k_ui_test
     $ npm install

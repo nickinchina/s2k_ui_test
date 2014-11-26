@@ -742,19 +742,19 @@ describe("s2k login page", function() {
             for (j = 0; j < 5; j++) {
                 switch (j) {
                     case 0:
-                        listname = 'Accounts';
+                        listname = 'Users'; //'Accounts';
                         break;
                     case 1:
-                        listname = 'Users';
+                        listname = 'User Roles'; //'Users';
                         break;
                     case 2:
-                        listname = 'User Roles';
+                        listname = 'Payment method'; //'User Roles';
                         break;
                     case 3:
-                        listname = 'loyalty Programs';
+                        listname = 'Fuel Tank Types'; //'loyalty Programs';
                         break;
                     case 4:
-                        listname = 'Payment method';
+                        listname = 'POS Terminals'; //'Payment method';
                         break;
                     case 5:
                         listname = 'Credit Card Gateways';

@@ -6,7 +6,7 @@ var moment = require('moment');
 
 var filename = moment().format('YYYY-MM-DD HH-mm-ss.SSS') + '[MRK].log';
 console.log('RUNNING S2K UI TEST --- ["Marketing"] MODULE ...\nPLEASE WAIT ...');
-exec('protractor s2k_logs_conf.js > "log/' + filename + '"', function(error, stdout, stderr) {
+exec('protractor s2k_marketing_conf.js > "log/' + filename + '"', function(error, stdout, stderr) {
     if ( !error ) {
         console.log('UI TEST FINISED. \nPLEASE CHECK THE LOG FILE: "' + filename + '"');
         //console.log(stdout);

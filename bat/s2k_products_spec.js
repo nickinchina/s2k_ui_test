@@ -929,7 +929,7 @@ describe("s2k login page", function() {
     var topMenu = browser.params.menuindex.products.index;
     it("login to system", logins2k);
 
-    if (false) {
+    if (true) {
         describe('"Products" menu navigation', function () {
             var dropdown;
             beforeEach(function () {
@@ -964,6 +964,14 @@ describe("s2k login page", function() {
                     it('Pricebook', function () {
                         //click_products_catalog(dropdown, testindex); //0=products catalog; 1=Pricebook
                         click_pricebook(dropdown, browser.params.menuindex.products.idxPricebook, testindex); //0=products catalog; 1=pricebooks
+                    });
+                })(i);
+            }
+
+            for (i = 0; i < testcount; i++) {
+                (function (testindex) {
+                    it('Quick Add\/Change Product', function () {
+                        click_product_quick_add(dropdown, browser.params.menuindex.products.idxQuickAdd, testindex); //0=Products Catalog
                     });
                 })(i);
             }
@@ -1041,7 +1049,7 @@ describe("s2k login page", function() {
         });
     }
 
-    if (true) {
+    if (false) {
         describe('Products Advance Search', function () {
             var dropdown;
             beforeEach(function () {

@@ -8,6 +8,7 @@
  * Structure:
  * aBarcode[i] = {name: '', barcode = '', shortname = ''};
  */
+var bGetBarcode = false; //run click_products_catalog to get barcode, only run once
 var aBarcode = [];
 //Print console.log with Date-Time Stamp
 printLog = function(logText){
@@ -87,6 +88,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
+    browser.executeScript('window.scrollTo(0,0)');
     clickButton.click().then(showfooter);
 
     var newInput;
@@ -142,7 +144,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         if (icount > 0) {
             console.log('Click List Record No. ' + ((listindex % icount)+1) + '/' + icount);
 
-            list.get(listindex % icount).click().then(showfooter);
+            list.get((icount - listindex - 1) % icount).click().then(showfooter);
 
             //var subTitle2 = element.all(by.css('[ng-show="subTitle"]'));
             subTitle1.count().then(function(list){
@@ -375,6 +377,7 @@ click_pricebook = function(dropdown, menuindex, listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
+    browser.executeScript('window.scrollTo(0,0)');
     clickButton.click().then(showfooter);
 
     var newInput = element.all(by.css('.col-md-6 input'));
@@ -425,7 +428,6 @@ click_pricebook_modify = function(dropdown, listindex){
 
             //list.get(listindex % icount).click();
             list.get(listindex % icount).click().then(showfooter); //点击单项
-TODO:
             //expect(modaldialog.first().getText()).toEqual('Editing');
 
             var input = element.all(by.css('.col-md-4 input'));
@@ -459,6 +461,7 @@ TODO:
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
+    browser.executeScript('window.scrollTo(0,0)');
     clickButton.click().then(showfooter);
 
     var newInput = element.all(by.css('.col-md-6 input'));
@@ -527,6 +530,7 @@ click_upc_assembly = function(dropdown, menuindex,listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
+    browser.executeScript('window.scrollTo(0,0)');
     clickButton.click().then(showfooter);
 
     var newInput = element.all(by.css('.col-md-8 input'));
@@ -572,6 +576,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
+    browser.executeScript('window.scrollTo(0,0)');
     clickButton.click().then(showfooter);
 
     var newInput;
@@ -594,6 +599,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         //fuel grades
@@ -615,6 +621,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         //fuel tanks
@@ -636,6 +643,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         //fuel blends
@@ -657,6 +665,7 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
                 console.log('Go Back To [ ' + text + ' ] Page\n');
             });
             expect(clickButton.getText()).toEqual('Listing');
+            browser.executeScript('window.scrollTo(0,0)');
             clickButton.click().then(showfooter);
             break;
         default:
@@ -751,6 +760,7 @@ click_store = function(dropdown, menuindex, listindex){
             console.log('\nClick Button Name [ ' + text + ' ]');
         });
         expect(clickButton.getText()).toEqual('New');
+        browser.executeScript('window.scrollTo(0,0)');
         clickButton.click().then(showfooter);
         var newInput;
         if (menuindex == 12) {
@@ -771,6 +781,7 @@ click_store = function(dropdown, menuindex, listindex){
             console.log('Go Back To [ ' + text + ' ] Page\n');
         });
         expect(clickButton.getText()).toEqual('Listing');
+        browser.executeScript('window.scrollTo(0,0)');
         clickButton.click().then(showfooter);
 
         subTitle1 = element.all(by.css('[ng-show="subTitle"]'));

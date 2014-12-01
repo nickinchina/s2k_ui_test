@@ -47,14 +47,14 @@ exports.config = {
     //login user & password
     params: {
         login: {
-            usermail: 'tsotest@s2k.net', //hq登录用户名
-            password: '1234'
+            //usermail: 'tsotest@s2k.net', //hq登录用户名
+            //password: '1234'
 
             //usermail: 'tsosite@s2k.net',
             //password: '1234'
 
-            //usermail: 'test@s2k.net', //local登录用户名
-            //password: '2447532'
+            usermail: 'test@s2k.net', //local登录用户名
+            password: '1234'
         },
         test: {
             count: 2 //每个列表测试次数

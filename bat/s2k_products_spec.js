@@ -89,55 +89,64 @@ click_products_catalog = function(dropdown, menuindex, listindex){
     });
     expect(clickButton.getText()).toEqual('New');
     browser.executeScript('window.scrollTo(0,0)');
-    clickButton.click().then(showfooter);
-
-    var newInput;
-    dropdown.getText().then(function(text){
-        dropdowntext = text;
-        if (text == 'Marketing' && menuindex == 1) { //Marketing -> Advertizement Items
-            newInput = element.all(by.css('.col-md-4 input'));
-        } else if(text == 'Products' && menuindex == browser.params.menuindex.products.idxTaxRates) { //Products -> Tax Rates
-            newInput = element.all(by.css('.col-md-2 input'));
-        } else {
-            newInput = element.all(by.css('.col-md-6 input'));
+    clickButton.getAttribute('disabled').then(function(value){
+        if (value)
+        {
+            printLog('Button [New] is Disabled !');
         }
-        newInput.count().then(function(icount){
-            console.log('Located ' +icount + ' Input Box(s)');
-        });
-        newInput.each(function(ele) {
-            ele.isDisplayed().then(function(isVisible){
-                if (isVisible) {
-                    ele.sendKeys(' (Valided by protractor)');
+        else
+        {
+            clickButton.click().then(showfooter);
+
+            var newInput;
+            dropdown.getText().then(function(text){
+                dropdowntext = text;
+                if (text == 'Marketing' && menuindex == 1) { //Marketing -> Advertizement Items
+                    newInput = element.all(by.css('.col-md-4 input'));
+                } else if(text == 'Products' && menuindex == browser.params.menuindex.products.idxTaxRates) { //Products -> Tax Rates
+                    newInput = element.all(by.css('.col-md-2 input'));
+                } else {
+                    newInput = element.all(by.css('.col-md-6 input'));
+                }
+                newInput.count().then(function(icount){
+                    console.log('Located ' +icount + ' Input Box(s)');
+                });
+                newInput.each(function(ele) {
+                    ele.isDisplayed().then(function(isVisible){
+                        if (isVisible) {
+                            ele.sendKeys(' (Valided by protractor)');
+                        }
+                    });
+                });
+                /*
+                 element.all(by.css('[ng-click="backToList()"]')).count().then(function(icount){
+                 console.log('found back to list buttons: ' + icount);
+                 });
+                 element(by.css('[ng-click="backToList()"]')).getText().then(function(text){
+                 console.log('Go Back To [ ' + text + ' ] Page\n');
+                 expect(text).toEqual('Listing');
+                 });
+                 */
+                //.click().then(showfooter);
+            }).then(function(){
+                element(by.css('[ng-click="backToList()"]')).click().then(showfooter).then(function(){
+                    console.log('Go Back To [ Listing ] Page\n');
+                    expect(subTitle1.first().getText()).toEqual('Listing');
+                });
+            });
+
+            //subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
+            subTitle1.count().then(function(list){
+                if (list>0) {
+                    console.log('Located SubTitle Name [ Listing ]');
+                }
+                else {
+                    console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
                 }
             });
-        });
-/*
-        element.all(by.css('[ng-click="backToList()"]')).count().then(function(icount){
-            console.log('found back to list buttons: ' + icount);
-        });
-        element(by.css('[ng-click="backToList()"]')).getText().then(function(text){
-            console.log('Go Back To [ ' + text + ' ] Page\n');
-            expect(text).toEqual('Listing');
-        });
-        */
-        //.click().then(showfooter);
-    }).then(function(){
-        element(by.css('[ng-click="backToList()"]')).click().then(showfooter).then(function(){
-            console.log('Go Back To [ Listing ] Page\n');
             expect(subTitle1.first().getText()).toEqual('Listing');
-        });
-    });
-
-    //subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
-    subTitle1.count().then(function(list){
-        if (list>0) {
-            console.log('Located SubTitle Name [ Listing ]');
-        }
-        else {
-            console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
         }
     });
-    expect(subTitle1.first().getText()).toEqual('Listing');
 
     var list=element.all(by.repeater('item in items')); //Get List
     list.count().then(function(icount){
@@ -378,18 +387,27 @@ click_pricebook = function(dropdown, menuindex, listindex){
     });
     expect(clickButton.getText()).toEqual('New');
     browser.executeScript('window.scrollTo(0,0)');
-    clickButton.click().then(showfooter);
+    clickButton.getAttribute('disabled').then(function(value){
+        if (value)
+        {
+            printLog('Button [New] is Disabled !');
+        }
+        else
+        {
+            clickButton.click().then(showfooter);
 
-    var newInput = element.all(by.css('.col-md-6 input'));
-    newInput.count().then(function(icount){
-        console.log('Located ' +icount + ' Input Box(s)');
-    });
-    newInput.each(function (ele) {
-        ele.isDisplayed().then(function(isVisible){
-            if (isVisible) {
-                ele.sendKeys(' (Valided by protractor)');
-            }
-        });
+            var newInput = element.all(by.css('.col-md-6 input'));
+            newInput.count().then(function(icount){
+                console.log('Located ' +icount + ' Input Box(s)');
+            });
+            newInput.each(function (ele) {
+                ele.isDisplayed().then(function(isVisible){
+                    if (isVisible) {
+                        ele.sendKeys(' (Valided by protractor)');
+                    }
+                });
+            });
+        }
     });
 };
 
@@ -531,17 +549,26 @@ click_upc_assembly = function(dropdown, menuindex,listindex){
     });
     expect(clickButton.getText()).toEqual('New');
     browser.executeScript('window.scrollTo(0,0)');
-    clickButton.click().then(showfooter);
+    clickButton.getAttribute('disabled').then(function(value){
+        if (value)
+        {
+            printLog('Button [New] is Disabled !');
+        }
+        else
+        {
+            clickButton.click().then(showfooter);
 
-    var newInput = element.all(by.css('.col-md-8 input'));
-    newInput.count().then(function(icount){
-        console.log('Located ' +icount + ' Input Box(s)');
+            var newInput = element.all(by.css('.col-md-8 input'));
+            newInput.count().then(function(icount){
+                console.log('Located ' +icount + ' Input Box(s)');
+            });
+            newInput.each(function (ele) {
+                //ele.clear().sendKeys('Valided by protractor.');
+                ele.sendKeys(' (Valided by protractor)');
+            });
+            element(by.css('[ng-click="cancel()"]')).click(); //cancel click
+        }
     });
-    newInput.each(function (ele) {
-        //ele.clear().sendKeys('Valided by protractor.');
-        ele.sendKeys(' (Valided by protractor)');
-    });
-    element(by.css('[ng-click="cancel()"]')).click(); //cancel click
 };
 
 click_fuel_grade = function(dropdown, menuindex, listindex){
@@ -577,111 +604,120 @@ click_fuel_grade = function(dropdown, menuindex, listindex){
     });
     expect(clickButton.getText()).toEqual('New');
     browser.executeScript('window.scrollTo(0,0)');
-    clickButton.click().then(showfooter);
-
-    var newInput;
-    switch(menuindex) {
-        case 1:case 2:case 3:
-            newInput = element.all(by.css('.col-md-8 input'));
-            newInput.count().then(function(icount){
-                console.log('Located ' +icount + ' Input Box(s)');
-            });
-            newInput.each(function (ele) {
-                ele.isDisplayed().then(function(isVisible){
-                    if (isVisible) {
-                        ele.sendKeys(' (Valided by protractor)');
-                    }
-                });
-            });
-
-            clickButton=element(by.css('[ng-click="backToList()"]'));
-            clickButton.getText().then(function(text){
-                console.log('Go Back To [ ' + text + ' ] Page\n');
-            });
-            expect(clickButton.getText()).toEqual('Listing');
-            browser.executeScript('window.scrollTo(0,0)');
-            clickButton.click().then(showfooter);
-            break;
-        //fuel grades
-        case browser.params.menuindex.products.idxFuelGrades:
-            newInput = element.all(by.css('.col-md-8 input'));
-            newInput.count().then(function(icount){
-                console.log('Located ' +icount + ' Input Box(s)');
-            });
-            newInput.each(function (ele) {
-                ele.isDisplayed().then(function(isVisible){
-                    if (isVisible) {
-                        ele.sendKeys(' (Valided by protractor)');
-                    }
-                });
-            });
-
-            clickButton=element(by.css('[ng-click="backToList()"]'));
-            clickButton.getText().then(function(text){
-                console.log('Go Back To [ ' + text + ' ] Page\n');
-            });
-            expect(clickButton.getText()).toEqual('Listing');
-            browser.executeScript('window.scrollTo(0,0)');
-            clickButton.click().then(showfooter);
-            break;
-        //fuel tanks
-        case browser.params.menuindex.products.idxFuelTanks: //4
-            newInput = element.all(by.css('.col-md-4 select'));
-            newInput.count().then(function(icount){
-                console.log('*** ***\nLocated ' +icount + ' Select List(s)\n*** ***');
-            });
-            newInput.each(function (ele) {
-                ele.isDisplayed().then(function(isVisible){
-                    if (isVisible) {
-                        ele.sendKeys(' (Valided by protractor)');
-                    }
-                });
-            });
-
-            clickButton=element(by.css('[ng-click="backToList()"]'));
-            clickButton.getText().then(function(text){
-                console.log('Go Back To [ ' + text + ' ] Page\n');
-            });
-            expect(clickButton.getText()).toEqual('Listing');
-            browser.executeScript('window.scrollTo(0,0)');
-            clickButton.click().then(showfooter);
-            break;
-        //fuel blends
-        case browser.params.menuindex.products.idxFuelBlends: //5
-            newInput = element.all(by.css('.col-md-4 input'));
-            newInput.count().then(function(icount){
-                console.log('Located ' +icount + ' Input Box(s)');
-            });
-            newInput.each(function (ele) {
-                ele.isDisplayed().then(function(isVisible){
-                    if (isVisible) {
-                        ele.sendKeys(' (Valided by protractor)');
-                    }
-                });
-            });
-
-            clickButton=element(by.css('[ng-click="backToList()"]'));
-            clickButton.getText().then(function(text){
-                console.log('Go Back To [ ' + text + ' ] Page\n');
-            });
-            expect(clickButton.getText()).toEqual('Listing');
-            browser.executeScript('window.scrollTo(0,0)');
-            clickButton.click().then(showfooter);
-            break;
-        default:
-            break;
-    }
-
-    subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
-    subTitle1.count().then(function(list){
-        if (list>0) {
-            console.log('Located SubTitle Name [ Listing ]');
+    clickButton.getAttribute('disabled').then(function(value){
+        if (value)
+        {
+            printLog('Button [New] is Disabled !');
         }
-        else {
-            console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
+        else
+        {
+            clickButton.click().then(showfooter);
+
+            var newInput;
+            switch(menuindex) {
+                case 1:case 2:case 3:
+                newInput = element.all(by.css('.col-md-8 input'));
+                newInput.count().then(function(icount){
+                    console.log('Located ' +icount + ' Input Box(s)');
+                });
+                newInput.each(function (ele) {
+                    ele.isDisplayed().then(function(isVisible){
+                        if (isVisible) {
+                            ele.sendKeys(' (Valided by protractor)');
+                        }
+                    });
+                });
+
+                clickButton=element(by.css('[ng-click="backToList()"]'));
+                clickButton.getText().then(function(text){
+                    console.log('Go Back To [ ' + text + ' ] Page\n');
+                });
+                expect(clickButton.getText()).toEqual('Listing');
+                browser.executeScript('window.scrollTo(0,0)');
+                clickButton.click().then(showfooter);
+                break;
+                //fuel grades
+                case browser.params.menuindex.products.idxFuelGrades:
+                    newInput = element.all(by.css('.col-md-8 input'));
+                    newInput.count().then(function(icount){
+                        console.log('Located ' +icount + ' Input Box(s)');
+                    });
+                    newInput.each(function (ele) {
+                        ele.isDisplayed().then(function(isVisible){
+                            if (isVisible) {
+                                ele.sendKeys(' (Valided by protractor)');
+                            }
+                        });
+                    });
+
+                    clickButton=element(by.css('[ng-click="backToList()"]'));
+                    clickButton.getText().then(function(text){
+                        console.log('Go Back To [ ' + text + ' ] Page\n');
+                    });
+                    expect(clickButton.getText()).toEqual('Listing');
+                    browser.executeScript('window.scrollTo(0,0)');
+                    clickButton.click().then(showfooter);
+                    break;
+                //fuel tanks
+                case browser.params.menuindex.products.idxFuelTanks: //4
+                    newInput = element.all(by.css('.col-md-4 select'));
+                    newInput.count().then(function(icount){
+                        console.log('*** ***\nLocated ' +icount + ' Select List(s)\n*** ***');
+                    });
+                    newInput.each(function (ele) {
+                        ele.isDisplayed().then(function(isVisible){
+                            if (isVisible) {
+                                ele.sendKeys(' (Valided by protractor)');
+                            }
+                        });
+                    });
+
+                    clickButton=element(by.css('[ng-click="backToList()"]'));
+                    clickButton.getText().then(function(text){
+                        console.log('Go Back To [ ' + text + ' ] Page\n');
+                    });
+                    expect(clickButton.getText()).toEqual('Listing');
+                    browser.executeScript('window.scrollTo(0,0)');
+                    clickButton.click().then(showfooter);
+                    break;
+                //fuel blends
+                case browser.params.menuindex.products.idxFuelBlends: //5
+                    newInput = element.all(by.css('.col-md-4 input'));
+                    newInput.count().then(function(icount){
+                        console.log('Located ' +icount + ' Input Box(s)');
+                    });
+                    newInput.each(function (ele) {
+                        ele.isDisplayed().then(function(isVisible){
+                            if (isVisible) {
+                                ele.sendKeys(' (Valided by protractor)');
+                            }
+                        });
+                    });
+
+                    clickButton=element(by.css('[ng-click="backToList()"]'));
+                    clickButton.getText().then(function(text){
+                        console.log('Go Back To [ ' + text + ' ] Page\n');
+                    });
+                    expect(clickButton.getText()).toEqual('Listing');
+                    browser.executeScript('window.scrollTo(0,0)');
+                    clickButton.click().then(showfooter);
+                    break;
+                default:
+                    break;
+            }
+
+            subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
+            subTitle1.count().then(function(list){
+                if (list>0) {
+                    console.log('Located SubTitle Name [ Listing ]');
+                }
+                else {
+                    console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
+                }
+            });
+            expect(subTitle1.first().getText()).toEqual('Listing');
         }
     });
-    expect(subTitle1.first().getText()).toEqual('Listing');
 
     var list=element.all(by.repeater('item in items')); //Get List
     list.count().then(function(icount){

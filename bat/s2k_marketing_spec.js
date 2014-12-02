@@ -80,42 +80,51 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
-    clickButton.click().then(showfooter);
+    clickButton.getAttribue('disabled').then(function(value){
+        if (value)
+        {
+            printLog('Button [New] is Disabled !');
+        }
+        else
+        {
+            clickButton.click().then(showfooter);
 
-    var newInput;
-    dropdown.getText().then(function(text){
-        if (text == 'Marketing' && menuindex == 1) { //Marketing -> Advertizement Items
-            newInput = element.all(by.css('.col-md-4 input'));
-        } else if(text == 'Products' && menuindex == 7) { //Products -> Tax Rates
-            newInput = element.all(by.css('.col-md-2 input'));
-        } else {
-            newInput = element.all(by.css('.col-md-6 input'));
-        }
-        newInput.count().then(function(icount){
-            console.log('Located ' +icount + ' Input Box(s)');
-        });
-        newInput.each(function (ele) {
-            //ele.clear().sendKeys('Valided by protractor.');
-            ele.sendKeys(' (Valided by protractor)');
-        });
-    });
-    clickButton=element(by.css('[ng-click="backToList()"]'));
-    clickButton.getText().then(function(text){
-        console.log('Go Back To [ ' + text + ' ] Page\n');
-    });
-    expect(clickButton.getText()).toEqual('Listing');
-    clickButton.click().then(showfooter);
+            var newInput;
+            dropdown.getText().then(function(text){
+                if (text == 'Marketing' && menuindex == 1) { //Marketing -> Advertizement Items
+                    newInput = element.all(by.css('.col-md-4 input'));
+                } else if(text == 'Products' && menuindex == 7) { //Products -> Tax Rates
+                    newInput = element.all(by.css('.col-md-2 input'));
+                } else {
+                    newInput = element.all(by.css('.col-md-6 input'));
+                }
+                newInput.count().then(function(icount){
+                    console.log('Located ' +icount + ' Input Box(s)');
+                });
+                newInput.each(function (ele) {
+                    //ele.clear().sendKeys('Valided by protractor.');
+                    ele.sendKeys(' (Valided by protractor)');
+                });
+            });
+            clickButton=element(by.css('[ng-click="backToList()"]'));
+            clickButton.getText().then(function(text){
+                console.log('Go Back To [ ' + text + ' ] Page\n');
+            });
+            expect(clickButton.getText()).toEqual('Listing');
+            clickButton.click().then(showfooter);
 
-    subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
-    subTitle1.count().then(function(list){
-        if (list>0) {
-            console.log('Located SubTitle Name [ Listing ]');
-        }
-        else {
-            console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
+            subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
+            subTitle1.count().then(function(list){
+                if (list>0) {
+                    console.log('Located SubTitle Name [ Listing ]');
+                }
+                else {
+                    console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
+                }
+            });
+            expect(subTitle1.first().getText()).toEqual('Listing');
         }
     });
-    expect(subTitle1.first().getText()).toEqual('Listing');
 
     var list=element.all(by.repeater('item in items')); //Get List
     list.count().then(function(icount){

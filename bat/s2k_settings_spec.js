@@ -548,42 +548,51 @@ click_store = function(dropdown, menuindex, listindex){
             console.log('\nClick Button Name [ ' + text + ' ]');
         });
         expect(clickButton.getText()).toEqual('New');
-        clickButton.click().then(showfooter);
-        var newInput;
-        if (menuindex == 12) {
-            newInput = element.all(by.css('.col-md-8 input'));
-        } else {
-            newInput = element.all(by.css('.col-md-4 input'));
-        }
+        clickButton.getAttribute('disabled').then(function(value){
+            if (value)
+            {
+                printLog('Button [New] is Disabled !');
+            }
+            else
+            {
+                clickButton.click().then(showfooter);
+                var newInput;
+                if (menuindex == 12) {
+                    newInput = element.all(by.css('.col-md-8 input'));
+                } else {
+                    newInput = element.all(by.css('.col-md-4 input'));
+                }
 
-        newInput.each(function (ele) {
-            //ele.clear().sendKeys('Valided by protractor.');
-            ele.sendKeys(' (Valided by protractor)');
-        });
-        newInput.count().then(function (icount) {
-            console.log('Located ' + icount + ' Input Box(s)');
-            if (icount > 0) {
-                newInput.first().sendKeys(' ');
+                newInput.each(function (ele) {
+                    //ele.clear().sendKeys('Valided by protractor.');
+                    ele.sendKeys(' (Valided by protractor)');
+                });
+                newInput.count().then(function (icount) {
+                    console.log('Located ' + icount + ' Input Box(s)');
+                    if (icount > 0) {
+                        newInput.first().sendKeys(' ');
+                    }
+                });
+
+                clickButton = element(by.css('[ng-click="backToList()"]'));
+                clickButton.getText().then(function (text) {
+                    console.log('Go Back To [ ' + text + ' ] Page\n');
+                });
+                expect(clickButton.getText()).toEqual('Listing');
+                clickButton.click().then(showfooter);
+
+                subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
+                subTitle1.count().then(function(list){
+                    if (list>0) {
+                        console.log('Located SubTitle Name [ Listing ]');
+                    }
+                    else {
+                        console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
+                    }
+                });
+                expect(subTitle1.first().getText()).toEqual('Listing');
             }
         });
-
-        clickButton = element(by.css('[ng-click="backToList()"]'));
-        clickButton.getText().then(function (text) {
-            console.log('Go Back To [ ' + text + ' ] Page\n');
-        });
-        expect(clickButton.getText()).toEqual('Listing');
-        clickButton.click().then(showfooter);
-
-        subTitle1 = element.all(by.css('[ng-show="subTitle"]'));
-        subTitle1.count().then(function(list){
-            if (list>0) {
-                console.log('Located SubTitle Name [ Listing ]');
-            }
-            else {
-                console.log('*** *** *** CANNOT Located SubTitle Name [ Listing ] !');
-            }
-        });
-        expect(subTitle1.first().getText()).toEqual('Listing');
     }
 
     subTitle1 = element.all(by.css('[ng-show="subTitle"]'));

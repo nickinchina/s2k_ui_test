@@ -80,7 +80,7 @@ click_products_catalog = function(dropdown, menuindex, listindex){
         console.log('\nClick Button Name [ ' + text + ' ]');
     });
     expect(clickButton.getText()).toEqual('New');
-    clickButton.getAttribue('disabled').then(function(value){
+    clickButton.getAttribute('disabled').then(function(value){
         if (value)
         {
             printLog('Button [New] is Disabled !');

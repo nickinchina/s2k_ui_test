@@ -17,10 +17,10 @@ exports.config = {
     //https://github.com/angular/protractor/blob/master/docs/timeouts.md
 
     //Waiting for Page to Load & Waiting for Angular
-    getPageTimeout: 50000,
+    getPageTimeout: 100000,
 
     //Waiting for Page Synchronization
-    allScriptsTimeout: 51000,
+    allScriptsTimeout: 101000,
 
     // Capabilities to be passed to the webdriver instance.
     capabilities: {
@@ -78,6 +78,6 @@ exports.config = {
     // Options to be passed to Jasmine-node.
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 60000
+        defaultTimeoutInterval: 102000
     }
 };

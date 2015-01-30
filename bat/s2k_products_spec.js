@@ -229,7 +229,7 @@ click_product_quick_add = function(dropdown, menuindex, listindex){
 
     var newInput = element(by.model('item.upc'));
     var searchButton = element(by.css('[ng-click="search()"]'));
-    newInput.clear().sendKeys('(Valided by protractor)').then(function() {
+    newInput.clear().sendKeys('00000000000000').then(function() {
         searchButton.click().then(function() {
             element.all(by.css('.col-md-6 input')).each(function(ele) {
                 ele.isDisplayed().then(function(isVisible){
@@ -977,7 +977,7 @@ describe("s2k login page", function() {
     var topMenu = browser.params.menuindex.products.index;
     it("login to system", logins2k);
 
-    if (true) {
+    if (false) {
         describe('"Products" menu navigation', function () {
             var dropdown;
             beforeEach(function () {
@@ -1097,7 +1097,7 @@ describe("s2k login page", function() {
         });
     }
 
-    if (false) {
+    if (true) {
         describe('Products Advance Search', function () {
             var dropdown;
             beforeEach(function () {
@@ -1109,8 +1109,8 @@ describe("s2k login page", function() {
 
             for (i = 0; i < testcount; i++) {
                 (function (testindex) {
-                    it('Products Advance Search', function () {
-                        click_advanced_search(dropdown, browser.params.menuindex.products.idxProducts, testindex); //0=Products Catalog
+                    it('Quick Add\/Change Product', function () {
+                        click_product_quick_add(dropdown, browser.params.menuindex.products.idxQuickAdd, testindex); //0=Products Catalog
                     });
                 })(i);
             }

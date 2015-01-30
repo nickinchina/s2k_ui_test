@@ -293,16 +293,17 @@ click_advanced_search = function(dropdown, menuindex, listindex){
             advSearch.click();
 
             var mSelect = element(by.model('item.categoryid'));
-            mSelect.element(by.css('input')).sendKeys('test to input filter').clear();
+            //JAN.30,2015 mSelect.element(by.css('input')).sendKeys('test to input filter').clear();
+            //JAN.30,2015 element.all(by.css('.input-group-btn button')).first().click();
+            //JAN.30,2015 var dList = element.all(by.css('[class="ui-select-choices-row ng-scope"]')).all(by.css('li'));
+            mSelect.element(by.css('input')).click();
 
-            element.all(by.css('.input-group-btn button')).first().click();
-
-            var dList = element.all(by.css('[class="input-group-btn open"]')).all(by.css('li'));
-
+            var dList = element.all(by.css('[class="ui-select-choices-row ng-scope"]'));
             dList.count().then(function(icount){
+                console.log('dList : ' + icount);
                 dList.get(listindex % icount).click();
-                dList.get((listindex+5) % icount).click();
-                dList.get((listindex+10) % icount).click();
+                //dList.get((listindex+5) % icount).click();
+                //dList.get((listindex+10) % icount).click();
             });
 
             element(by.css('[ng-click="ok()"]')).click().then(showfooter);
@@ -1107,22 +1108,12 @@ describe("s2k login page", function() {
             var testcount = browser.params.test.count;
 
             for (i = 0; i < testcount; i++) {
-                //闭包函数参考：http://stackoverflow.com/questions/21634558/looping-on-a-protractor-test-with-parameters
                 (function (testindex) {
-                    it('Products Catalog', function () {
-                        click_products_catalog(dropdown, browser.params.menuindex.products.idxProducts, testindex); //0=Products Catalog
+                    it('Products Advance Search', function () {
+                        click_advanced_search(dropdown, browser.params.menuindex.products.idxProducts, testindex); //0=Products Catalog
                     });
                 })(i);
             }
-
-            for (i = 0; i < testcount; i++) {
-                (function (testindex) {
-                    it('Quick Add\/Change Product', function () {
-                        click_product_quick_add(dropdown, browser.params.menuindex.products.idxQuickAdd, testindex); //0=Products Catalog
-                    });
-                })(i);
-            }
-
         });
     }
 });

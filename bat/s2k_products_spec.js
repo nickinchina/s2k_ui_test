@@ -977,7 +977,7 @@ describe("s2k login page", function() {
     var topMenu = browser.params.menuindex.products.index;
     it("login to system", logins2k);
 
-    if (false) {
+    if (true) {
         describe('"Products" menu navigation', function () {
             var dropdown;
             beforeEach(function () {
@@ -1097,7 +1097,7 @@ describe("s2k login page", function() {
         });
     }
 
-    if (true) {
+    if (false) {
         describe('Products Advance Search', function () {
             var dropdown;
             beforeEach(function () {

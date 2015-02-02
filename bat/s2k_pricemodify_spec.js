@@ -14,7 +14,6 @@ logins2k = function(){
     browser.get('http://store.s2k.net/admin/#/login');//
 
     element(by.model('selected')).clear().sendKeys('Test ["Products"] Module');
-
     //element(by.model('user.email')).sendKeys('tsotest@s2k.net'); //直接输入用户名
     element(by.model('user.email')).sendKeys(username); //使用conf_test.js中的params.login.usermail
     element(by.model('user.email')).getAttribute('value').then(printLog);
@@ -292,6 +291,7 @@ click_pricebook = function(dropdown, listindex){
 click_pricebook_modify = function(dropdown, listindex){
     //console.log('\n********** Click List No. '+ (listindex+1) +' **********\n');
     var menu=dropdown.all(by.css('[ng-click="go(link.link)"]')).get(1); //pricebook固定值
+
     menu.getText().then(function(menutext){
         printLog('Click Dropdown Menu [ '+ menutext +' ] Index:1');
     });
@@ -308,9 +308,10 @@ click_pricebook_modify = function(dropdown, listindex){
     });
     expect(subTitle1.first().getText()).toEqual('Listing');
 
+    var perpagecount = '20';
     var perpage = element.all(by.css('[class="col-md-3 sg-footer"]')).first();
     perpage.click().then(function(){
-        element.all(by.css('[type="number"]')).first().clear().sendKeys('20');
+        element.all(by.css('[type="number"]')).first().clear().sendKeys(perpagecount);
         element.all(by.css('[class="editable-buttons"]')).click();
     });
 
@@ -327,7 +328,7 @@ click_pricebook_modify = function(dropdown, listindex){
      });
      });
      */
-    var list=element.all(by.repeater('item in items')); //Get List
+    var list = element.all(by.repeater('item in items')); //Get List
     var found = false, check = 0, ireturn = -1;
     list.count().then(function(icount) {
         //这个for循环是一个比较“诡异”的闭包函数运算
@@ -340,10 +341,10 @@ click_pricebook_modify = function(dropdown, listindex){
         printLog('Searching for Retail == SRP from list count: ' + icount);
         for (var i = 0; i < icount; i++) {
             (function (ilcount) {
-                console.log('ilcount: ' + ilcount);
+                //console.log('ilcount: ' + ilcount);
                 var iPrice = list.get(ilcount).all(by.css('.col-sg-2'));
                 iPrice.count().then(function (ipcount) {
-                    console.log('ipcount: ' + ipcount);
+                    //console.log('ipcount: ' + ipcount);
                     iPrice.get(0).getText().then(function (iretail) {
                         iPrice.get(1).getText().then(function (isrp) {
                             if (iretail == isrp && check <= listindex) {
@@ -392,9 +393,15 @@ click_pricebook_modify = function(dropdown, listindex){
                     input.clear().sendKeys(String(Number(iretail) + 0.01));
                 });
             }).then(function () {
-                element(by.css('[ng-click="ok()"]')).click().then(showfooter); //Submit Retail change
+                printLog('Add Price Click OK.');
+                element(by.css('[ng-click="ok()"]')).click(); //.then(showfooter); //Submit Retail change
+            //}).then(function () {
+            //    list.get(iselect).getLocation().then(function (position) {
+            //        browser.executeScript('window.scrollTo(' + position.x + ',' + position.y + ')');
+            //    });
             }).then(function () {
-                list.get(iselect).click().then(showfooter);
+                printLog('Verify Add Price.');
+                list.get(iselect).click();//.then(showfooter);
             }).then(function () {
                 var input = element(by.model('item.retail'));
                 input.getAttribute('value').then(function (newretail) {

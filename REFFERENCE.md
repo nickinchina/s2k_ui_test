@@ -87,6 +87,21 @@ http://binbinliao.com/programming/commandline-nodejs.html
 child_process.exec执行批处理
 https://cnodejs.org/topic/4fd9a164e7f86b4213002a77
 
+获取当前元素(element)的坐标、尺寸
+http://blog.csdn.net/gzh0222/article/details/7568527
+http://stackoverflow.com/questions/24918028/protractor-how-to-access-the-elementfinder-class-from-within-a-test
+element.getLocation().then(function(position){
+    var x = position.x;
+    var y = position.y;
+});
+element.getSize().then(function(size){
+    var w = size.width;
+    var h = size.height;
+});
+
+滚动窗体命令window.scrollTo(x,y)
+browser.executeScript('window.scrollTo(0,0)');
+
 旧的bat命令行，现在要替换成执行node s2k_exec.js方式
 /*
 

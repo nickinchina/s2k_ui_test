@@ -308,6 +308,12 @@ click_pricebook_modify = function(dropdown, listindex){
     });
     expect(subTitle1.first().getText()).toEqual('Listing');
 
+    var perpage = element.all(by.css('[class="col-md-3 sg-footer"]')).first();
+    perpage.click().then(function(){
+        element.all(by.css('[type="number"]')).first().clear().sendKeys('20');
+        element.all(by.css('[class="editable-buttons"]')).click();
+    });
+
     /*  filter功能是有效的，但引用的时候，会重复执行filter过程。所以暂时不用这个方法
      var ifilter = element.all(by.repeater('item in items')).filter(function(ele){
      return ele.all(by.css('.col-md-1')).get(0).getText().then(function(value){
@@ -334,8 +340,10 @@ click_pricebook_modify = function(dropdown, listindex){
         printLog('Searching for Retail == SRP from list count: ' + icount);
         for (var i = 0; i < icount; i++) {
             (function (ilcount) {
-                var iPrice = list.get(ilcount).all(by.css('.col-md-1'));
+                console.log('ilcount: ' + ilcount);
+                var iPrice = list.get(ilcount).all(by.css('.col-sg-2'));
                 iPrice.count().then(function (ipcount) {
+                    console.log('ipcount: ' + ipcount);
                     iPrice.get(0).getText().then(function (iretail) {
                         iPrice.get(1).getText().then(function (isrp) {
                             if (iretail == isrp && check <= listindex) {
@@ -356,18 +364,18 @@ click_pricebook_modify = function(dropdown, listindex){
         if (iselect >= 0) {
             var sname, sbarcode, iretail, isrp;
             //var iselect = 6 + listindex;
-            list.get(iselect).all(by.css('.col-md-2')).get(0).getText().then(function (text) { //get Name
+            list.get(iselect).all(by.css('.col-sg-5')).get(0).getText().then(function (text) { //get Name
                 sname = text;
             }).then(function () {
-                list.get(iselect).all(by.css('.col-md-2')).get(1).getText().then(function (text) { //get Barcode
+                list.get(iselect).all(by.css('.col-sg-2')).get(1).getText().then(function (text) { //get Barcode
                     sbarcode = text;
                 });
             }).then(function () {
-                list.get(iselect).all(by.css('.col-md-1')).get(0).getText().then(function (text) { //get Retail
+                list.get(iselect).all(by.css('.col-sg-2')).get(0).getText().then(function (text) { //get Retail
                     iretail = text.replace('$', '');
                 });
             }).then(function () {
-                list.get(iselect).all(by.css('.col-md-1')).get(1).getText().then(function (text) { //get SRP
+                list.get(iselect).all(by.css('.col-sg-2')).get(1).getText().then(function (text) { //get SRP
                     isrp = text.replace('$', '');
                 });
             }).then(function () {

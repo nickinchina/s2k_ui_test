@@ -308,7 +308,7 @@ click_pricebook_modify = function(dropdown, listindex){
     });
     expect(subTitle1.first().getText()).toEqual('Listing');
 
-    var perpagecount = '20';
+    var perpagecount = '30';
     var perpage = element.all(by.css('[class="col-md-3 sg-footer"]')).first();
     perpage.click().then(function(){
         element.all(by.css('[type="number"]')).first().clear().sendKeys(perpagecount);
@@ -382,7 +382,7 @@ click_pricebook_modify = function(dropdown, listindex){
             }).then(function () {
                 printLog('Name: ' + sname + ' Barcode: ' + sbarcode + ' Retail: ' + iretail + ' SRP: ' + isrp);
             }).then(function () {
-                list.get(iselect).click();
+                list.get(iselect).click().then(showfooter);
             }).then(function () {
                 var input = element(by.model('item.retail'));
                 input.getAttribute('value').then(function (text) { //check Retail
@@ -393,26 +393,31 @@ click_pricebook_modify = function(dropdown, listindex){
                     input.clear().sendKeys(String(Number(iretail) + 0.01));
                 });
             }).then(function () {
-                printLog('Add Price Click OK.');
-                element(by.css('[ng-click="ok()"]')).click(); //.then(showfooter); //Submit Retail change
+                //printLog('Add Price Click OK.');
+                element(by.css('[ng-click="ok()"]')).click().then(showfooter); //Submit Retail change
             //}).then(function () {
             //    list.get(iselect).getLocation().then(function (position) {
             //        browser.executeScript('window.scrollTo(' + position.x + ',' + position.y + ')');
             //    });
             }).then(function () {
-                printLog('Verify Add Price.');
-                list.get(iselect).click();//.then(showfooter);
+                //printLog('Verify Add Price.');
+                list.get(iselect).click().then(showfooter);
             }).then(function () {
+                //printLog('confirm new price.');
                 var input = element(by.model('item.retail'));
                 input.getAttribute('value').then(function (newretail) {
                     printLog('New Retail Price: ' + newretail);
                     expect(Number(newretail)).toBe(Number(iretail) + 0.01); //Verify Retail Change
                 });
             }).then(function () {
+                //printLog('cancel() click');
                 element(by.css('[ng-click="cancel()"]')).click().then(showfooter); //Go back to list
             }).then(function () {
+                //printLog('ctrl + click');
                 browser.actions().keyDown(protractor.Key.CONTROL).click(list.get(iselect)).keyUp(protractor.Key.CONTROL).perform(); //CTRL+Click
             }).then(function () {
+                browser.executeScript('window.scrollTo(0,0)');
+                //printLog('srp click');
                 element(by.css('[ng-click="suggested()"]')).click().then(showfooter);
             }).then(function () {
                 printLog('Choose Change Type: (+)Add and Update');
@@ -427,7 +432,7 @@ click_pricebook_modify = function(dropdown, listindex){
                     browser.switchTo().alert().accept();
                 }).then(showfooter);
             }).then(function () {
-                list.get(iselect).all(by.css('.col-md-1')).get(0).getText().then(function (text) { //Verify Retail & SRP
+                list.get(iselect).all(by.css('.col-sg-2')).get(0).getText().then(function (text) { //Verify Retail & SRP
                     printLog('Retail Reset to SRP: ' + text);
                     expect(Number(text.replace('$', ''))).toBe(Number(isrp));
                 });

@@ -157,7 +157,11 @@ click_products_catalog = function(dropdown, menuindex, listindex){
             });
             input.each(function (ele) {
                 //ele.clear().sendKeys('Valided by protractor.');
-                ele.sendKeys(' (Valided by protractor)');
+                ele.isEnabled().then(function (isEnabled) {
+                    if (isEnabled) {
+                        ele.sendKeys(' (Valided by protractor)');
+                    }
+                });
             });
         }
         else {

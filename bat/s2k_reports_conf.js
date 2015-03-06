@@ -6,7 +6,8 @@ exports.config = {
 
     /*start up protractor only by chrome*/
     // Do not start a Selenium Standalone sever - only run this using chrome.
-    chromeOnly: true,
+    //chromeOnly: true, //Warning: chromeOnly is deprecated. Use directConnect
+    directConnect: true,
     chromeDriver: '../selenium/chromedriver',
 
     /*start up protractor only by chrome*/

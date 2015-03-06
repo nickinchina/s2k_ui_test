@@ -1,3 +1,11 @@
+下载链接：
+=========
+
+selenium-server-standalone home:
+http://selenium-release.storage.googleapis.com/index.html
+http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar
+
 安装向导：
 =========
 

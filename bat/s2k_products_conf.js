@@ -6,12 +6,14 @@ exports.config = {
 
     /*start up protractor only by chrome*/
     // Do not start a Selenium Standalone sever - only run this using chrome.
-    chromeOnly: true,
+    //chromeOnly: true, //Warning: chromeOnly is deprecated. Use directConnect
+    directConnect: true,
+
+    //https://github.com/angular/protractor/blob/master/example/conf.js
     chromeDriver: '../selenium/chromedriver',
 
     /*start up protractor only by chrome*/
     //seleniumAddress: 'http://localhost:4444/wd/hub',
-
 
     //Timeouts from Protractor
     //https://github.com/angular/protractor/blob/master/docs/timeouts.md

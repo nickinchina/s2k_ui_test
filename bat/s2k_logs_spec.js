@@ -657,10 +657,20 @@ click_logs = function(dropdown, menuindex, listindex){
             console.log('Click History Record No. ' + ((listindex % icount) + 1) + '/' + icount);
             list.get(listindex % icount).click().then(showfooter); //点击单项
 
-            var modaldialog = element.all(by.model('form'));
-            modaldialog.each(function (ele) {
+            var mdialog = element.all(by.css('[class="modal fade  in"]'));
+            mdialog.count().then(function (icount){
+                console.log('Modal Dialog : ', icount);
+                if (icount > 1) {
+                    for (var i = icount - 1; i > 0; i--) {
+                        (function (index) {
+                            mdialog.get(index).element(by.css('[ng-click="cancel()"]')).click();
+                        })(i);
+                    }
+                }
+            });
+            mdialog.first().then(function (ele) {
                 //console.log('form count: ');
-                var subcount=modaldialog.count();//.then(console.log);
+                //var subcount=mdialog.count();//.then(console.log);
                 var subtext=ele.getText();//.then(console.log);
                 var subAtt=ele.getAttribute('class');//.then(console.log);
             });
@@ -734,13 +744,14 @@ describe("s2k login page", function() {
             var i, j;
             var testcount = browser.params.test.count;
 
-            for (j = 0; j < 15; j++) {
+            for (j = 0; j < 22; j++) {
                 for (i = 0; i < testcount; i++) {
                     //for (i = 0; i < testcount; i++) {
                     //闭包函数参考：http://stackoverflow.com/questions/21634558/looping-on-a-protractor-test-with-parameters
                     (function (menuindex, testindex) {
                         it('[ Logs ] Dropdown List No. ' + (j + 1), function () {
                             click_logs(dropdown, menuindex, testindex); //0=Promotion Acceptance Workflow
+                            browser.sleep(500);
                         });
                     })(j, i);
                 }

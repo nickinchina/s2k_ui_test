@@ -293,22 +293,25 @@ click_advanced_search = function(dropdown, menuindex, listindex){
             advSearch.click();
 
             var mSelect = element(by.model('item.categoryid'));
-            //JAN.30,2015 mSelect.element(by.css('input')).sendKeys('test to input filter').clear();
-            //JAN.30,2015 element.all(by.css('.input-group-btn button')).first().click();
-            //JAN.30,2015 var dList = element.all(by.css('[class="ui-select-choices-row ng-scope"]')).all(by.css('li'));
-            mSelect.element(by.css('input')).click();
+            //browser.executeScript('window.scrollTo(0,0)');
 
-            var dList = element.all(by.css('[class="ui-select-choices-row ng-scope"]'));
-            dList.count().then(function(icount){
-                console.log('dList : ' + icount);
-                dList.get(listindex % icount).click();
-                //dList.get((listindex+5) % icount).click();
-                //dList.get((listindex+10) % icount).click();
+            //Activate dropdown list
+            mSelect.element(by.css('input')).sendKeys(' ').clear();
+
+            mSelect.element(by.css('input')).click().then(function () {
+                //var dList = element.all(by.className('ui-select-choices-row ng-scope'));
+                var dList = mSelect.element(by.className('ui-select-choices-group')).all(by.css('[class="ui-select-choices-row-inner"]'));
+                dList.count().then(function (icount) {
+                    console.log('Department List : ' + icount + ' record(s).');
+                    dList.get(listindex % icount).then(function (ele) {
+                        ele.element(by.css('div')).getText().then(console.log);
+                        ele.element(by.css('div')).click();
+                    });
+                });
             });
 
             element(by.css('[ng-click="ok()"]')).click().then(showfooter);
 
-            //expect(element.all(by.repeater('item in items')).count()).toBeGreaterThan(0);
             expect(element.all(by.repeater('item in items')).count()).not.toBe(0);
 
             element(by.css('[ng-click="modalSearchReset()"]')).click();
@@ -494,6 +497,7 @@ click_pricebook_modify = function(dropdown, listindex){
 };
 
 click_upc_assembly = function(dropdown, menuindex,listindex){
+    browser.executeScript('window.scrollTo(0,0)');
     //console.log('\n********** Click List No. '+ (listindex+1) +' **********\n');
     var menu=dropdown.all(by.css('[ng-click="go(link.link)"]')).get(menuindex); //upc_assembly固定值
     menu.getText().then(function(menutext){
@@ -518,12 +522,26 @@ click_upc_assembly = function(dropdown, menuindex,listindex){
             console.log('Click List Record No. ' + ((listindex % icount)+1) + '/' + icount);
             list.get(listindex % icount).click().then(showfooter); //点击单项
 
+            //This is a bug in s2k.net, pops up 2 windows
+            var mdialog = element.all(by.css('[class="modal fade  in"]'));
+            mdialog.count().then(function (icount){
+                console.log('Modal Dialog : ', icount);
+                if (icount > 1) {
+                    for (var i = icount - 1; i > 0; i--) {
+                        (function (index) {
+                            mdialog.get(index).element(by.css('[ng-click="cancel()"]')).click();
+                        })(i);
+                    }
+                }
+            });
+
             var input = element.all(by.css('.col-md-8 input'));
             input.count().then(console.log);
             input.each(function (ele) {
                 //ele.clear().sendKeys('Valided by protractor.');
                 ele.sendKeys(' (Valided by protractor)');
             });
+
 
             element(by.css('[ng-click="cancel()"]')).click(); //cancel click
         }
@@ -567,6 +585,7 @@ click_upc_assembly = function(dropdown, menuindex,listindex){
                 //ele.clear().sendKeys('Valided by protractor.');
                 ele.sendKeys(' (Valided by protractor)');
             });
+            //element.all(by.css('.col-md-2 input')).first().clear().sendKeys('1');
             element(by.css('[ng-click="cancel()"]')).click(); //cancel click
         }
     });
@@ -1034,13 +1053,17 @@ describe("s2k login page", function() {
                 })(i);
             }
 
-            //for (i = 0; i < 0; i++) {
+            /* Build aBarcode for Unit Debug Text
+            aBarcode[0] = {name: 'COOKIE- OATMEAL RAISIN (CASE)', barcode: '0063221001131', shortname: 'COOKIE- OATMEAL RAISIN (CASE)'};
+            aBarcode[1] = {name: 'COOKIE-CHOC CHUNK (CASE)', barcode: '0063221001130', shortname: 'COOKIE-CHOC CHUNK (CASE)'};
+            */
             for (i = 0; i < testcount; i++) {
                 //闭包函数参考：http://stackoverflow.com/questions/21634558/looping-on-a-protractor-test-with-parameters
                 (function (testindex) {
                     it('UPC Assembly', function () {
-                        console.log('check barcode value :' + aBarcode);
+                        console.log('Check Barcode Value : ', aBarcode);
                         click_upc_assembly(dropdown, browser.params.menuindex.products.idxUPCAssembly, testindex); //3=UPC Assembly
+                        browser.sleep(500);
                     });
                 })(i);
             }
@@ -1098,7 +1121,7 @@ describe("s2k login page", function() {
     }
 
     if (false) {
-        describe('Products Advance Search', function () {
+        describe('Products Unit Debug Test', function () {
             var dropdown;
             beforeEach(function () {
                 dropdown = element.all(by.repeater('item in modules')).get(topMenu); //Get "Products"
@@ -1107,10 +1130,16 @@ describe("s2k login page", function() {
             var i;
             var testcount = browser.params.test.count;
 
+            /* Build aBarcode for Unit Debug Text */
+            aBarcode[0] = {name: 'COOKIE- OATMEAL RAISIN (CASE)', barcode: '0063221001131', shortname: 'COOKIE- OATMEAL RAISIN (CASE)'};
+            aBarcode[1] = {name: 'COOKIE-CHOC CHUNK (CASE)', barcode: '0063221001130', shortname: 'COOKIE-CHOC CHUNK (CASE)'};
+
             for (i = 0; i < testcount; i++) {
                 (function (testindex) {
-                    it('Quick Add\/Change Product', function () {
-                        click_product_quick_add(dropdown, browser.params.menuindex.products.idxQuickAdd, testindex); //0=Products Catalog
+                    it('UPC Assembly', function () {
+                        console.log('Check Barcode', testindex, 'Value :', aBarcode);
+                        click_upc_assembly(dropdown, browser.params.menuindex.products.idxUPCAssembly, testindex); //3=UPC Assembly
+                        browser.sleep(500);
                     });
                 })(i);
             }

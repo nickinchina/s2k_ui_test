@@ -11,7 +11,7 @@ printLog = function(logText){
 logins2k = function(){
     var username = browser.params.login.usermail;
     var password = browser.params.login.password;
-    browser.get('http://store.s2k.net/admin/#/login');//
+    browser.get('https://store.s2k.net/admin/#/login');//
 
     element(by.model('selected')).clear().sendKeys('Test ["Products"] Module');
     //element(by.model('user.email')).sendKeys('tsotest@s2k.net'); //直接输入用户名

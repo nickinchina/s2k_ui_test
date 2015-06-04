@@ -13,7 +13,7 @@ logins2k = function(){
     var password = browser.params.login.password;
     browser.get('https://store.s2k.net/admin/#/login');//
 
-    element(by.model('selected')).clear().sendKeys('Test ["Products"] Module');
+    //comments element(by.model('selected')).clear().sendKeys('Test ["Products"] Module');
     //element(by.model('user.email')).sendKeys('tsotest@s2k.net'); //直接输入用户名
     element(by.model('user.email')).sendKeys(username); //使用conf_test.js中的params.login.usermail
     element(by.model('user.email')).getAttribute('value').then(printLog);
@@ -25,7 +25,7 @@ logins2k = function(){
 
     var btnLogin = element(by.buttonText('LOGIN'));
     btnLogin.click();//login
-    element(by.model('selected')).clear();
+    //comments element(by.model('selected')).clear();
 };
 
 showfooter = function() {
@@ -40,7 +40,16 @@ showfooter = function() {
     //element(by.model('selected')).getAttribute('class').then(console.log);
 
     //expect(element(by.model('selected')).isDisplayed()).toBeTruthy();
-    element(by.model('selected')).isDisplayed().then(function(isVisible){
+    /* //comments element(by.model('selected')).isDisplayed().then(function(isVisible){
+     if (isVisible !== true) {
+     element(by.model('breadcrumbs.listingSearch')).isDisplayed().then(function(isVisible){
+     if (isVisible !== true) {
+     console.log('*** *** *** Search Box ISNOT Visible ! *** *** ***');
+     }
+     });
+     }
+     }); */
+    element(by.css('footer')).isDisplayed().then(function(isVisible){
         if (isVisible !== true) {
             element(by.model('breadcrumbs.listingSearch')).isDisplayed().then(function(isVisible){
                 if (isVisible !== true) {

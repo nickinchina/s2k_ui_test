@@ -41,7 +41,16 @@ showfooter = function() {
     //element(by.model('selected')).getAttribute('class').then(console.log);
 
     //expect(element(by.model('selected')).isDisplayed()).toBeTruthy();
-    //comments element(by.model('selected')).isDisplayed().then(function(isVisible){
+    /* //comments element(by.model('selected')).isDisplayed().then(function(isVisible){
+        if (isVisible !== true) {
+            element(by.model('breadcrumbs.listingSearch')).isDisplayed().then(function(isVisible){
+                if (isVisible !== true) {
+                    console.log('*** *** *** Search Box ISNOT Visible ! *** *** ***');
+                }
+            });
+        }
+    }); */
+    element(by.css('footer')).isDisplayed().then(function(isVisible){
         if (isVisible !== true) {
             element(by.model('breadcrumbs.listingSearch')).isDisplayed().then(function(isVisible){
                 if (isVisible !== true) {

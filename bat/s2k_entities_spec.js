@@ -11,7 +11,9 @@ printLog = function(logText){
 logins2k = function(){
     var username = browser.params.login.usermail;
     var password = browser.params.login.password;
-    browser.get('https://store.s2k.net/admin/#/login');//
+    browser.get('https://store.s2k.net/admin/#/login');//station id 8
+    //browser.get('https://tsotest.s2k.net/admin/#/login');//station id 9
+    //browser.get('https://bpstore.s2k.net/admin/#/login');//station id 2001
 
     //comments element(by.model('selected')).clear().sendKeys('Test ["Entities"] Module');
 
